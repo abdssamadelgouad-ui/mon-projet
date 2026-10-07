@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GroceryPro — Store Manager</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="logo">
+      <span class="logo-text">GroceryPro</span>
+      <span class="logo-icon">🛒</span>
+      
+    </div>
+    <nav class="nav">
+      <button class="nav-btn active" data-page="dashboard">
+        <span>📊</span> Dashboard
+      </button>
+      <button class="nav-btn" data-page="products">
+        <span>📦</span> Products
+      </button>
+      <button class="nav-btn" data-page="sell">
+        <span>💰</span> Sell
+      </button>
+      <button class="nav-btn" data-page="history">
+        <span>📋</span> Sales History
+      </button>
+    </nav>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="main">
+
+    <!-- ===== DASHBOARD PAGE ===== -->
+    <section class="page active" id="page-dashboard">
+      <div class="page-header">
+        <h1>Dashboard</h1>
+        <span class="date-badge" id="current-date"></span>
+      </div>
+
+      <div class="stat-grid">
+        <div class="stat-card green">
+          <div class="stat-icon">💵</div>
+          <div class="stat-info">
+            <span class="stat-label">Monthly Profit</span>
+            <span class="stat-value" id="stat-profit">$0.00</span>
+          </div>
+        </div>
+        <div class="stat-card blue">
+          <div class="stat-icon">🛍️</div>
+          <div class="stat-info">
+            <span class="stat-label">Total Sales</span>
+            <span class="stat-value" id="stat-sales">0</span>
+          </div>
+        </div>
+        <div class="stat-card orange">
+          <div class="stat-icon">📦</div>
+          <div class="stat-info">
+            <span class="stat-label">Products</span>
+            <span class="stat-value" id="stat-products">0</span>
+          </div>
+        </div>
+        <div class="stat-card red">
+          <div class="stat-icon">⚠️</div>
+          <div class="stat-info">
+            <span class="stat-label">Low Stock</span>
+            <span class="stat-value" id="stat-lowstock">0</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-title">Low Stock Alerts</div>
+      <div class="alert-list" id="low-stock-list">
+        <p class="empty-msg">✅ All products are well stocked!</p>
+      </div>
+
+      <div class="section-title" style="margin-top:2rem;">Recent Sales</div>
+      <div class="recent-sales" id="recent-sales-list">
+        <p class="empty-msg">No sales recorded yet.</p>
+      </div>
+    </section>
+
+    <!-- ===== PRODUCTS PAGE ===== -->
+    <section class="page" id="page-products">
+      <div class="page-header">
+        <h1>Products</h1>
+        <button class="btn-primary" id="open-add-modal">+ Add Product</button>
+      </div>
+
+      <div class="search-bar">
+        <input type="text" id="search-input" placeholder="🔍  Search products…"/>
+      </div>
+
+      <div class="product-grid" id="product-grid">
+        <p class="empty-msg">No products added yet. Click "Add Product" to start.</p>
+      </div>
+    </section>
+
+    <!-- ===== SELL PAGE ===== -->
+    <section class="page" id="page-sell">
+      <div class="page-header">
+        <h1>Sell a Product</h1>
+      </div>
+
+      <div class="sell-form card">
+        <div class="form-group">
+          <label>Select Product</label>
+          <select id="sell-product-select">
+            <option value="">— Choose a product —</option>
+          </select>
+        </div>
+        <div class="sell-info" id="sell-info" style="display:none;">
+          <div class="sell-detail-row">
+            <span>Selling Price:</span>
+            <strong id="sell-price-display">—</strong>
+          </div>
+          <div class="sell-detail-row">
+            <span>Current Stock:</span>
+            <strong id="sell-stock-display">—</strong>
+          </div>
+          <div class="sell-detail-row">
+            <span>Profit per Unit:</span>
+            <strong id="sell-profit-display" class="profit-highlight">—</strong>
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Quantity to Sell</label>
+          <input type="number" id="sell-qty" min="1" value="1" placeholder="1"/>
+        </div>
+        <button class="btn-primary btn-sell" id="confirm-sell">Confirm Sale 💰</button>
+        <div class="sell-feedback" id="sell-feedback"></div>
+      </div>
+    </section>
+
+    <!-- ===== HISTORY PAGE ===== -->
+    <section class="page" id="page-history">
+      <div class="page-header">
+        <h1>Sales History</h1>
+        <button class="btn-secondary" id="clear-history-btn">Clear History</button>
+      </div>
+      <div class="history-filter">
+        <label>Filter by month:</label>
+        <input type="month" id="month-filter"/>
+        <button class="btn-secondary" id="filter-btn">Filter</button>
+        <button class="btn-ghost" id="reset-filter-btn">Reset</button>
+      </div>
+      <div class="history-summary" id="history-summary" style="display:none;"></div>
+      <div class="history-table-wrap">
+        <table class="history-table">
+          <thead>
+            <tr>
+              <th>Date & Time</th>
+              <th>Product</th>
+              <th>Qty Sold</th>
+              <th>Sell Price</th>
+              <th>Buy Price</th>
+              <th>Profit</th>
+            </tr>
+          </thead>
+          <tbody id="history-tbody">
+            <tr><td colspan="6" class="empty-msg">No sales history yet.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ===== ADD/EDIT PRODUCT MODAL ===== -->
+  <div class="modal-overlay" id="product-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 id="modal-title">Add Product</h2>
+        <button class="modal-close" id="close-modal">✕</button>
+      </div>
+
+      <!-- Image Upload -->
+      <div class="img-upload-area" id="img-upload-area">
+        <img id="preview-img" src="" alt="" style="display:none;"/>
+        <div class="img-placeholder" id="img-placeholder">
+          <span>📷</span>
+          <p>Click to upload image</p>
+        </div>
+        <input type="file" id="img-file-input" accept="image/*" style="display:none;"/>
+      </div>
+
+      <div class="form-group">
+        <label>Product Name *</label>
+        <input type="text" id="product-name" placeholder="e.g. Olive Oil, Sugar, Eggs…"/>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Stock Quantity *</label>
+          <input type="number" id="product-qty" min="0" placeholder="0"/>
+        </div>
+        <div class="form-group">
+          <label>Unit (optional)</label>
+          <input type="text" id="product-unit" placeholder="kg, L, pcs…"/>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label>Purchase Price ($) *</label>
+          <input type="number" id="product-buy-price" min="0" step="0.01" placeholder="0.00"/>
+        </div>
+        <div class="form-group">
+          <label>Selling Price ($) *</label>
+          <input type="number" id="product-sell-price" min="0" step="0.01" placeholder="0.00"/>
+        </div>
+      </div>
+      <div class="profit-preview" id="profit-preview">
+        Profit per unit: <strong>—</strong>
+      </div>
+      <div class="modal-actions">
+        <button class="btn-ghost" id="cancel-modal">Cancel</button>
+        <button class="btn-primary" id="save-product">Save Product</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
+
+
