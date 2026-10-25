@@ -263,7 +263,7 @@ function updateProfitPreview() {
 // Save product
 document.getElementById('save-product').addEventListener('click', () => {
   const name      = document.getElementById('product-name').value.trim();
-  const qty       = parseInt(document.getElementById('product-qty').value);
+  const qty       = Number.parseInt(document.getElementById('product-qty').value);
   const unit      = document.getElementById('product-unit').value.trim();
   const buyPrice  = parseFloat(document.getElementById('product-buy-price').value);
   const sellPrice = parseFloat(document.getElementById('product-sell-price').value);
